@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "277892368516",
+    "project_id": "labubufire",
+    "storage_bucket": "labubufire.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277892368516:android:f79a42d955f813f3615ad1",
+        "android_client_info": {
+          "package_name": "com.chiuchiu.labubufire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277892368516-h1b54mc9nkjcqokcphgkif1dtinksf90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE6NkMoiU-vHuVfe7TN-oRQNAXH0AfebQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277892368516-h1b54mc9nkjcqokcphgkif1dtinksf90.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "277892368516-qm5hlrcjvcgk5pk6jf45ceec20cc5g4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.chiuchiu.labubufire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
