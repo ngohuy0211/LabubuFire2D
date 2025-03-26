@@ -1,0 +1,41 @@
+
+146.png
+size: 156,524
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 2, 255
+  size: 266, 144
+  orig: 266, 144
+  offset: 0, 0
+  index: -1
+light
+  rotate: true
+  xy: 114, 215
+  size: 38, 23
+  orig: 38, 23
+  offset: 0, 0
+  index: -1
+vay
+  rotate: false
+  xy: 78, 7
+  size: 73, 81
+  orig: 73, 81
+  offset: 0, 0
+  index: -1
+vay22
+  rotate: true
+  xy: 2, 2
+  size: 86, 74
+  orig: 86, 77
+  offset: 0, 0
+  index: -1
+vayrten
+  rotate: true
+  xy: 2, 90
+  size: 163, 110
+  orig: 163, 110
+  offset: 0, 0
+  index: -1

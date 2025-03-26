@@ -1,0 +1,34 @@
+
+148.png
+size: 272,304
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 158
+  size: 266, 144
+  orig: 266, 144
+  offset: 0, 0
+  index: -1
+vay
+  rotate: true
+  xy: 114, 2
+  size: 73, 65
+  orig: 73, 65
+  offset: 0, 0
+  index: -1
+vayduoi
+  rotate: false
+  xy: 114, 77
+  size: 154, 79
+  orig: 154, 79
+  offset: 0, 0
+  index: -1
+vayrten
+  rotate: true
+  xy: 2, 7
+  size: 149, 110
+  orig: 149, 110
+  offset: 0, 0
+  index: -1

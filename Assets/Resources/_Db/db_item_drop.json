@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "name": "Bánh trưng",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 2,
+    "name": "Cơm cuộn",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 3,
+    "name": "Shusi cá hồi",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 4,
+    "name": "Chè đen",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 5,
+    "name": "Shusi trứng cuộn",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 6,
+    "name": "Kẹo mút",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 7,
+    "name": "Kẹo thường",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 8,
+    "name": "Túi kẹo",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 9,
+    "name": "Tôm",
+    "hp": 10,
+    "type": 1,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 10,
+    "name": "Kẹo độc",
+    "hp": 10,
+    "type": 2,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 11,
+    "name": "Tăng 1 viên đạn",
+    "hp": 10,
+    "type": 3,
+    "valueAdd": 1,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 12,
+    "name": "Gấp 2 tốc độ ra đạn",
+    "hp": 10,
+    "type": 4,
+    "valueAdd": 5,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 13,
+    "name": "Hồi máu nhỏ",
+    "hp": 10,
+    "type": 5,
+    "valueAdd": 10,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 14,
+    "name": "Hồi máu lớn",
+    "hp": 10,
+    "type": 5,
+    "valueAdd": 20,
+    "quality": 1,
+    "damage": 5
+  },
+  {
+    "id": 15,
+    "name": "Item Box Coin",
+    "hp": 10,
+    "type": 6,
+    "valueAdd": 100,
+    "quality": 1,
+    "damage": 5
+  }
+]

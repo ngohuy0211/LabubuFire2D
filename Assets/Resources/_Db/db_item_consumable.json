@@ -1,0 +1,14 @@
+[
+ {
+   "id": 1,
+   "name": "Tiền xu",
+   "desc": "Dùng để mua vật phẩm",
+   "type": 1
+ },
+ {
+   "id": 2,
+   "name": "Kim cương",
+   "desc": "Dùng để mua vật phẩm",
+   "type": 1
+ }
+]

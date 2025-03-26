@@ -1,0 +1,48 @@
+
+147.png
+size: 340,552
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 2, 18
+  size: 531, 187
+  orig: 531, 187
+  offset: 0, 0
+  index: -1
+22
+  rotate: false
+  xy: 191, 82
+  size: 121, 101
+  orig: 132, 101
+  offset: 11, 0
+  index: -1
+as
+  rotate: true
+  xy: 191, 412
+  size: 137, 144
+  orig: 137, 144
+  offset: 0, 0
+  index: -1
+vay1
+  rotate: false
+  xy: 191, 288
+  size: 135, 122
+  orig: 135, 125
+  offset: 0, 3
+  index: -1
+vay2
+  rotate: true
+  xy: 191, 185
+  size: 101, 127
+  orig: 103, 128
+  offset: 0, 0
+  index: -1
+vayngna
+  rotate: false
+  xy: 191, 2
+  size: 93, 78
+  orig: 93, 78
+  offset: 0, 0
+  index: -1
