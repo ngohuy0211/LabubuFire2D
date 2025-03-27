@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "277892368516-vn2vd955ro2o3pe1nq7didf8ck0a3ens.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chiuchiu.labubufire",
+            "certificate_hash": "0f321b9077998cff21791de2eb0785c1ad821518"
+          }
+        },
+        {
           "client_id": "277892368516-h1b54mc9nkjcqokcphgkif1dtinksf90.apps.googleusercontent.com",
           "client_type": 3
         }
