@@ -119,7 +119,5 @@ public class FirebaseGooogleLogin : MonoBehaviour
         {
             Debug.Log("Error loading image: " + www.error);
         }
-
-
     }
 }
