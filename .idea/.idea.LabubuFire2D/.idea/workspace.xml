@@ -12,6 +12,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/04f1cffc017a43b29f178e8488445ed82a200/9c/d9d84093/AccessToken.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/GameData/UserModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@9.0.4/Editor/SceneDragAndDrop.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -85,6 +86,7 @@
       <updated>1743020024610</updated>
       <workItem from="1743020026261" duration="889000" />
       <workItem from="1743101158583" duration="1401000" />
+      <workItem from="1743187298509" duration="1240000" />
     </task>
     <servers />
   </component>

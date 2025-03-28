@@ -8,9 +8,7 @@ using UnityEngine;
 public class GameContext : Singleton<GameContext>
 {
     // data
-    public string Udid = "";
-    public string Session = "";
-    public string Username = "";
+    public UserModel UserModel = new UserModel();
     public BaseScene CurrentScene = null;
     public List<BasePopup> PopupActives = new List<BasePopup>();
     public bool MusicOn = true;
@@ -24,9 +22,7 @@ public class GameContext : Singleton<GameContext>
 
     public void ClearData()
     {
-        Udid = "";
-        Session = "";
-        Username = "";
+        UserModel = new UserModel();
         StaticData.Reset();
     }
 }
