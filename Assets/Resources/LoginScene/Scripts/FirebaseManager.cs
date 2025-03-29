@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using Facebook.Unity;
+using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
 
@@ -17,20 +19,49 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     private Firebase.Auth.FirebaseUser _user;
     private bool _isGoogleSignInInitialized = false;
 
-    public System.Action<UserModel> LoginDoneCb;
-    
+    public System.Action LoginDoneCb;
+    public System.Action RegisterDoneCb;
+    public System.Action LogOutDoneCb;
+
     protected override void OnAwake()
     {
-        InitFirebase();
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
+            var dependencyStatus = task.Result;
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            {
+                // Create and hold a reference to your FirebaseApp,
+                // where app is a Firebase.FirebaseApp property of your application class.
+                InitFirebase();
+
+                // Set a flag here to indicate whether Firebase is ready to use by your app.
+            }
+            else
+            {
+                UnityEngine.Debug.LogError(System.String.Format(
+                    "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                // Firebase Unity SDK is not safe to use here.
+            }
+        });
+
         //
         if (!FB.IsInitialized) FB.Init(InitCallback, OnHideUnity);
         else FB.ActivateApp();
     }
-    
-    private void InitFirebase() => _auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
 
-    public void LogOut() => _auth.SignOut();
-    
+    private void InitFirebase()
+    {
+        _auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        _auth.StateChanged += AuthStateChanged;
+        AuthStateChanged(this, null);
+    }
+
+    public void LogOut()
+    {
+        _auth.SignOut();
+        LogOutDoneCb?.Invoke();
+    }
+
     #region Login Google
 
     public void LoginWithGoogle()
@@ -46,6 +77,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
 
             _isGoogleSignInInitialized = true;
         }
+
         GoogleSignIn.Configuration = new GoogleSignInConfiguration
         {
             RequestIdToken = true,
@@ -71,7 +103,9 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             }
             else
             {
-                Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(((Task<GoogleSignInUser>)task).Result.IdToken, null);
+                Credential credential =
+                    Firebase.Auth.GoogleAuthProvider.GetCredential(((Task<GoogleSignInUser>) task).Result.IdToken,
+                        null);
                 _auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
                 {
                     if (authTask.IsCanceled)
@@ -85,16 +119,17 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
                     }
                     else
                     {
-                        signInCompleted.SetResult(((Task<FirebaseUser>)authTask).Result);
+                        signInCompleted.SetResult(((Task<FirebaseUser>) authTask).Result);
                         _user = _auth.CurrentUser;
                         Debug.LogFormat("User signed in successfully: {0} ({1})",
                             _user.DisplayName, _user.UserId);
-                        
+
                         GameContext.Instance.UserModel.UserId = _user.UserId;
                         GameContext.Instance.UserModel.UserDisplayName = _user.DisplayName;
                         GameContext.Instance.UserModel.UserEmail = _user.Email;
                         GameContext.Instance.UserModel.UserUrlAvatar = _user.PhotoUrl.ToString();
 
+                        LoginDoneCb?.Invoke();
                     }
                 });
             }
@@ -104,14 +139,14 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     #endregion
 
     #region Login Facebook
-    
+
     public void LoginWithFb()
     {
         Debug.Log("Login Facebook Called");
         var perms = new List<string>() {"public_profile", "email"};
         FB.LogInWithReadPermissions(perms, AuthCallback);
     }
-    
+
     private void AuthCallback(ILoginResult result)
     {
         Debug.Log(FB.IsLoggedIn);
@@ -126,7 +161,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             Debug.Log("User cancelled login");
         }
     }
-    
+
     private void FacebookAuth(string accessToken)
     {
         Firebase.Auth.Credential credential =
@@ -154,9 +189,11 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             GameContext.Instance.UserModel.UserDisplayName = _user.DisplayName;
             GameContext.Instance.UserModel.UserEmail = _user.Email;
             GameContext.Instance.UserModel.UserUrlAvatar = _user.PhotoUrl.ToString();
+
+            LoginDoneCb?.Invoke();
         });
     }
-    
+
     private void InitCallback()
     {
         if (FB.IsInitialized)
@@ -187,7 +224,179 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     }
 
     #endregion
+
+    #region Login Normal
+
+    public void RegisterUser(string email, string password, string username)
+    {
+        _auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
+                return;
+            }
+
+            if (task.IsFaulted)
+            {
+                Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    if (exception is not FirebaseException firebaseEx) return;
+                    var errorCode = (AuthError)firebaseEx.ErrorCode;
+                    Debug.LogError(GetErrorMessage(errorCode));
+                }
+                
+                return;
+            }
+
+            // Firebase user has been created.
+            Firebase.Auth.AuthResult result = task.Result;
+            Debug.LogFormat("Firebase user created successfully: {0} ({1})",
+                result.User.DisplayName, result.User.UserId);
+
+            UpdateUserProfile(username);
+        });
+    }
+
+    public void LoginWithEmail(string email, string password)
+    {
+        _auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
+                return;
+            }
+
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    if (exception is not FirebaseException firebaseEx) return;
+                    var errorCode = (AuthError)firebaseEx.ErrorCode;
+                    Debug.LogError(GetErrorMessage(errorCode));
+                }
+                
+                return;
+            }
+
+            Firebase.Auth.AuthResult result = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                result.User.DisplayName, result.User.UserId);
+            _user = result.User;
+
+            GameContext.Instance.UserModel.UserId = _user.UserId;
+            GameContext.Instance.UserModel.UserDisplayName = _user.DisplayName;
+            GameContext.Instance.UserModel.UserEmail = _user.Email;
+            GameContext.Instance.UserModel.UserUrlAvatar = _user.PhotoUrl.ToString();
+
+            LoginDoneCb?.Invoke();
+        });
+    }
+
+    private void AuthStateChanged(object sender, System.EventArgs eventArgs)
+    {
+        if (_auth.CurrentUser != _user)
+        {
+            bool signedIn = _user != _auth.CurrentUser && _auth.CurrentUser != null
+                                                       && _auth.CurrentUser.IsValid();
+            if (!signedIn && _user != null)
+                Debug.Log("Signed out " + _user.UserId);
+
+            _user = _auth.CurrentUser;
+            if (signedIn)
+                Debug.Log("Signed in " + _user.UserId);
+        }
+    }
+
+    public void ForgetPasswordSubmit(string email)
+    {
+        _auth.SendPasswordResetEmailAsync(email).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
+                return;
+            }
+
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    if (exception is not FirebaseException firebaseEx) return;
+                    var errorCode = (AuthError)firebaseEx.ErrorCode;
+                    Debug.LogError(GetErrorMessage(errorCode));
+                }
+                
+                return;
+            }
+            
+            Debug.Log("Successfully to send email for reset password!");
+        });
+    }
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        _auth.StateChanged -= AuthStateChanged;
+        _auth = null;
+    }
+
+    #endregion
+
+    #region Action
+
+    private void UpdateUserProfile(string userName)
+    {
+        Firebase.Auth.FirebaseUser user = _auth.CurrentUser;
+        if (user != null)
+        {
+            Firebase.Auth.UserProfile profile = new Firebase.Auth.UserProfile
+            {
+                DisplayName = userName,
+                PhotoUrl = new System.Uri("https://dummyimage.com/300"),
+            };
+            user.UpdateUserProfileAsync(profile).ContinueWith(task =>
+            {
+                if (task.IsCanceled)
+                {
+                    Debug.LogError("UpdateUserProfileAsync was canceled.");
+                    return;
+                }
+
+                if (task.IsFaulted)
+                {
+                    Debug.LogError("UpdateUserProfileAsync encountered an error: " + task.Exception);
+                    return;
+                }
+
+                Debug.Log("User profile updated successfully.");
+                RegisterDoneCb?.Invoke();
+            });
+        }
+    }
     
+    private string GetErrorMessage(AuthError errorCode)
+    {
+        var message = errorCode switch
+        {
+            AuthError.AccountExistsWithDifferentCredentials => "The account already exists with different credentials",
+            AuthError.MissingPassword => "Password is missing",
+            AuthError.WeakPassword => "El password es debil",
+            AuthError.WrongPassword => "The password is weak",
+            AuthError.EmailAlreadyInUse => "The account with that email already exists",
+            AuthError.InvalidEmail => "Invalid email",
+            AuthError.MissingEmail => "Email is required",
+            _ => "An error occurred"
+        };
+        return message;
+    }
+
+    #endregion
+
     #region Load Avatar
 
     public void LoadImage(Image img, string imageUri)
@@ -212,7 +421,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         {
             Debug.Log("Error loading image: " + www.error);
         }
-    }    
+    }
 
     #endregion
 }

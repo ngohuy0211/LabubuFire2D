@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PanelRegister : MonoBehaviour
+public class PanelForgetPassword : MonoBehaviour
 {
     #region Define
 
-    
-    
     #endregion
 
     #region Properties
