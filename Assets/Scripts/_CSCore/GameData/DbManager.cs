@@ -31,17 +31,11 @@ public class DbManager
     }
 
     #region Define data
-
-    private List<ItemConsumable> _itemConsumables = new List<ItemConsumable>();
-
+    
     #endregion
 
     #region List DB name
-
-    private const string HeroModel = "HeroModel";
-    private const string SkillModel = "SkillModel";
-    private const string ItemConsum = "ItemConsum";
-
+    
     #endregion
 
     #region READ DB
@@ -66,44 +60,6 @@ public class DbManager
         //
         List<LoadingInitDataAction> lstAction = new List<LoadingInitDataAction>();
 
-        lstAction.Add(new LoadingInitDataAction(HeroModel, delegate
-        {
-            string dbFile = "db_hero_bin";
-            byte[] bytes = ResourceHelper.LoadDbBinContent(dbFile);
-            if (bytes == null)
-            {
-                Debug.LogError("------ Error loading db file: " + dbFile);
-                return;
-            }
-
-            dicFileDb.Add(HeroModel, bytes);
-        }));
-
-        lstAction.Add(new LoadingInitDataAction(SkillModel, delegate
-        {
-            string dbFile = "db_skill_bin";
-            byte[] bytes = ResourceHelper.LoadDbBinContent(dbFile);
-            if (bytes == null)
-            {
-                Debug.LogError("------ Error loading db file: " + dbFile);
-                return;
-            }
-
-            dicFileDb.Add(SkillModel, bytes);
-        }));
-
-        lstAction.Add(new LoadingInitDataAction(ItemConsum, delegate
-        {
-            string dbFile = "db_item_consumable_bin";
-            byte[] bytes = ResourceHelper.LoadDbBinContent(dbFile);
-            if (bytes == null)
-            {
-                Debug.LogError("------ Error loading db file: " + dbFile);
-                return;
-            }
-
-            dicFileDb.Add(ItemConsum, bytes);
-        }));
 
         int numAction = lstAction.Count;
         if (numAction < 0)
@@ -173,9 +129,7 @@ public class DbManager
 
         List<LoadingInitDataAction> lstAction = new List<LoadingInitDataAction>();
         //
-        lstAction.Add(new LoadingInitDataAction(ItemConsum,
-            delegate { LoadDbItemConsumModel((byte[]) dicFileDb[ItemConsum]); }));
-
+        
         //
         int numAction = lstAction.Count;
         if (numAction < 0)
@@ -217,58 +171,6 @@ public class DbManager
         }
         //
         //Debug.LogError("------- TOTAL: " + totalTime);
-    }
-
-    #endregion
-
-    #region Item Consumable
-
-    public ItemConsumable GetItemConsumable(int itemKey)
-    {
-        return _itemConsumables.Find(item => item.ItemKey == itemKey);
-    }
-
-    public ItemConsumable GetItemConsumableCopy(int itemKey)
-    {
-        return (ItemConsumable) _itemConsumables.Find(item => item.ItemKey == itemKey).Clone();
-    }
-
-    private void LoadDbItemConsumModel(byte[] bytes)
-    {
-        _itemConsumables.Clear();
-        List<ItemConsumable> tmp = (List<ItemConsumable>) Utils.DeserializeObject(bytes);
-        if (tmp != null)
-        {
-            for (int i = 0; i < tmp.Count; i++)
-            {
-                ItemConsumable item = tmp[i];
-                _itemConsumables.Add(item);
-            }
-        }
-    }
-
-    public static List<ItemConsumable> ParseDbItemConsumable(string data)
-    {
-        List<ItemConsumable> listItem = new List<ItemConsumable>();
-        JSONArray jArr = JSON.Parse(data).AsArray;
-        //
-        for (int i = 0; i < jArr.Count; i++)
-        {
-            JSONClass jItem = jArr[i].AsObject;
-            ItemConsumable item = new ItemConsumable();
-            item.ItemKey = jItem["id"].AsInt;
-            item.ItemName = jItem["name"].Value;
-            item.ItemQuality = (ItemQuality)jItem["rank"].AsInt;
-            item.ShowType = jItem["showType"].AsInt;
-            item.Type = jItem["type"].AsInt;
-            item.ItemDesc = jItem["desc"].Value;
-            item.Previews = Utils.StringToList<int>(jItem["preview"]);
-            item.HowToGet = Utils.StringToList<int>(jItem["howToGet"]);
-            
-            listItem.Add(item);
-        }
-
-        return listItem;
     }
 
     #endregion

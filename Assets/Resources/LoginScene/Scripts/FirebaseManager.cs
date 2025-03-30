@@ -23,18 +23,24 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     public System.Action RegisterDoneCb;
     public System.Action LogOutDoneCb;
 
-    protected override void OnAwake()
+    public void InitFirebase()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
+                _auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+                if (_auth.CurrentUser != null)
+                    LogOut();
+                
                 // Create and hold a reference to your FirebaseApp,
                 // where app is a Firebase.FirebaseApp property of your application class.
-                InitFirebase();
-
                 // Set a flag here to indicate whether Firebase is ready to use by your app.
+                
+                //Auto Signin
+                // _auth.StateChanged += AuthStateChanged;
+                // AuthStateChanged(this, null);
             }
             else
             {
@@ -49,16 +55,11 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         else FB.ActivateApp();
     }
 
-    private void InitFirebase()
-    {
-        _auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        _auth.StateChanged += AuthStateChanged;
-        AuthStateChanged(this, null);
-    }
-
     public void LogOut()
     {
         _auth.SignOut();
+        _user = null;
+        GameContext.Instance.ClearData();
         LogOutDoneCb?.Invoke();
     }
 
@@ -98,7 +99,9 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             else if (task.IsFaulted)
             {
                 signInCompleted.SetException(task.Exception);
-
+                
+                ShowErrorMessage(task);
+                
                 Debug.Log("Faulted " + task.Exception);
             }
             else
@@ -177,6 +180,8 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInAndRetrieveDataWithCredentialAsync encountered an error: " + task.Exception);
+                ShowErrorMessage(task);
+                
                 return;
             }
 
@@ -240,13 +245,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             if (task.IsFaulted)
             {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                
-                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
-                {
-                    if (exception is not FirebaseException firebaseEx) return;
-                    var errorCode = (AuthError)firebaseEx.ErrorCode;
-                    Debug.LogError(GetErrorMessage(errorCode));
-                }
+                ShowErrorMessage(task);
                 
                 return;
             }
@@ -255,7 +254,8 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             Firebase.Auth.AuthResult result = task.Result;
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 result.User.DisplayName, result.User.UserId);
-
+            Toast.ShowUp("Register Successfully");
+            RegisterDoneCb?.Invoke();
             UpdateUserProfile(username);
         });
     }
@@ -273,12 +273,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
-                {
-                    if (exception is not FirebaseException firebaseEx) return;
-                    var errorCode = (AuthError)firebaseEx.ErrorCode;
-                    Debug.LogError(GetErrorMessage(errorCode));
-                }
+                ShowErrorMessage(task);
                 
                 return;
             }
@@ -304,11 +299,11 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             bool signedIn = _user != _auth.CurrentUser && _auth.CurrentUser != null
                                                        && _auth.CurrentUser.IsValid();
             if (!signedIn && _user != null)
-                Debug.Log("Signed out " + _user.UserId);
+                Debug.Log("Signed out " + _user.DisplayName + " - " + _user.UserId);
 
             _user = _auth.CurrentUser;
             if (signedIn)
-                Debug.Log("Signed in " + _user.UserId);
+                Debug.Log("Signed in " + _user.DisplayName + " - " + _user.UserId);
         }
     }
 
@@ -325,19 +320,14 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
-                {
-                    if (exception is not FirebaseException firebaseEx) return;
-                    var errorCode = (AuthError)firebaseEx.ErrorCode;
-                    Debug.LogError(GetErrorMessage(errorCode));
-                }
-                
+                ShowErrorMessage(task);
                 return;
             }
             
-            Debug.Log("Successfully to send email for reset password!");
+            Toast.ShowUp("Successfully to send email for reset password!");
         });
     }
+
     protected override void OnDestroy()
     {
         base.OnDestroy();
@@ -372,25 +362,35 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
                     Debug.LogError("UpdateUserProfileAsync encountered an error: " + task.Exception);
                     return;
                 }
-
-                Debug.Log("User profile updated successfully.");
-                RegisterDoneCb?.Invoke();
             });
         }
     }
-    
+
+
+    private void ShowErrorMessage(Task task)
+    {
+        string strErr = "";
+        foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+        {
+            if (exception is not FirebaseException firebaseEx) return;
+            var errorCode = (AuthError)firebaseEx.ErrorCode;
+            strErr += GetErrorMessage(errorCode);
+        }
+
+        Toast.ShowUp(strErr);
+    }
     private string GetErrorMessage(AuthError errorCode)
     {
         var message = errorCode switch
         {
             AuthError.AccountExistsWithDifferentCredentials => "The account already exists with different credentials",
             AuthError.MissingPassword => "Password is missing",
-            AuthError.WeakPassword => "El password es debil",
-            AuthError.WrongPassword => "The password is weak",
+            AuthError.WeakPassword => "The password is weak",
+            AuthError.WrongPassword => "The password is wrong",
             AuthError.EmailAlreadyInUse => "The account with that email already exists",
             AuthError.InvalidEmail => "Invalid email",
             AuthError.MissingEmail => "Email is required",
-            _ => "An error occurred"
+            _ => "An error occurred. Please recheck email or password"
         };
         return message;
     }

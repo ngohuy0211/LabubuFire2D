@@ -3,51 +3,52 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BasePopup : MonoBehaviour
 {
-    [SerializeField] GameObject m_GoContent;
-    [SerializeField] protected bool m_SetToLast = true;
+    [SerializeField] GameObject goContent;
+    [SerializeField] protected bool setToLast = true;
     
-    private DoTweenPopup tween;
-    private ScrollRect[] scrollArr;
-    private Canvas m_CanvasOverride;
+    private DoTweenPopup _tween;
+    private ScrollRect[] _scrollArr;
+    private Canvas _canvasOverride;
 
     
     public System.Action closeDoneCB { get; set; }
     public System.Action openDoneCB { get; set; }
     
-    private void Awake()
+    protected virtual void Awake()
     {
-        if (m_SetToLast)
+        if (setToLast)
         {
             Canvas canvasParrent = gameObject.GetComponentInParent<Canvas>();
 
-            if (m_CanvasOverride == null) m_CanvasOverride = gameObject.AddComponent<Canvas>();
+            if (_canvasOverride == null) _canvasOverride = gameObject.AddComponent<Canvas>();
 
             if (canvasParrent != null)
             {
-                m_CanvasOverride.overrideSorting = true;
-                m_CanvasOverride.sortingLayerName = canvasParrent.sortingLayerName;
+                _canvasOverride.overrideSorting = true;
+                _canvasOverride.sortingLayerName = canvasParrent.sortingLayerName;
                 gameObject.AddComponent<GraphicRaycaster>();
                 StaticData.LayerOrderCurrent += 100;
-                m_CanvasOverride.sortingOrder = StaticData.LayerOrderCurrent;
+                _canvasOverride.sortingOrder = StaticData.LayerOrderCurrent;
             }
         }
 
-        if (m_GoContent != null)
+        if (goContent != null)
         {
-            tween = m_GoContent.GetComponent<DoTweenPopup>();
-            if (tween == null)
+            _tween = goContent.GetComponent<DoTweenPopup>();
+            if (_tween == null)
             {
 #if UNITY_EDITOR
                 Debug.Log("----- Thêm DoTweenPopup vào " + this.name + " để custom type show -----");
 #endif
-                tween = m_GoContent.AddComponent<DoTweenPopup>();
+                _tween = goContent.AddComponent<DoTweenPopup>();
             }
 
-            tween.ShowPopup(delegate()
+            _tween.ShowPopup(delegate()
             {
                 openDoneCB?.Invoke();
             });
@@ -71,13 +72,13 @@ public class BasePopup : MonoBehaviour
     }
 
 
-    public virtual void ClosePopup()
+    protected virtual void ClosePopup()
     {
-        if (m_GoContent != null)
+        if (goContent != null)
         {
-            if (tween == null) closeDoneCB?.Invoke();
+            if (_tween == null) closeDoneCB?.Invoke();
             else
-                tween.ClosePopup(delegate()
+                _tween.ClosePopup(delegate()
                 {
                     closeDoneCB?.Invoke();
                     Destroy(this.gameObject);
@@ -90,7 +91,7 @@ public class BasePopup : MonoBehaviour
         }
     }
 
-    public virtual void ClosePopupNotEffect()
+    protected virtual void ClosePopupNotEffect()
     {
         Destroy(this.gameObject);
     }

@@ -6,7 +6,7 @@ public class SettingManager
 {
     #region Key
 
-    private const string KEY_USERNAME = "key_username";
+    private const string KEY_EMAIL_LOGIN = "key_username";
     private const string KEY_PASSWORD = "key_password";
     private const string KEY_ACCOUNT_ID = "key_account_id";
     private const string KEY_LAST_LOGIN_SERVER = "key_last_login";
@@ -19,14 +19,9 @@ public class SettingManager
 
     #region SET
     
-    public static void SaveClientLanguage(int language)
+    public static void SaveEmailLogin(string username)
     {
-        CacheManager.SetPrefInt(KEY_CACHE_CLIENT_LANGUAGE, language);
-    }
-
-    public static void SaveUsername(string username)
-    {
-        CacheManager.SetPrefString(KEY_USERNAME, username);
+        CacheManager.SetPrefString(KEY_EMAIL_LOGIN, username);
     }
 
     public static void SavePassword(string pwd)
@@ -37,11 +32,6 @@ public class SettingManager
     public static void SaveAccountID(string accountId)
     {
         CacheManager.SetPrefString(KEY_ACCOUNT_ID, accountId);
-    }
-
-    public static void SaveCp(string cp)
-    {
-        CacheManager.SetPrefString(KEY_CP, cp);
     }
     
     public static void SaveSoundSetting(bool soundOn)
@@ -59,16 +49,10 @@ public class SettingManager
     #endregion
 
     #region GET
-    
-    public static int GetClientLanguage(Language defaultLanguage)
-    {
-        int defaultValue = (int) defaultLanguage;
-        return CacheManager.LoadPrefInt(KEY_CACHE_CLIENT_LANGUAGE, defaultValue);
-    }
 
     public static string GetUsername()
     {
-        return CacheManager.LoadPrefString(KEY_USERNAME);
+        return CacheManager.LoadPrefString(KEY_EMAIL_LOGIN);
     }
 
     public static string GetPassword()
@@ -79,14 +63,6 @@ public class SettingManager
     public static string GetAccountID()
     {
         return CacheManager.LoadPrefString(KEY_ACCOUNT_ID);
-    }
-
-    public static string GetCp()
-    {
-        if (Application.isEditor)
-            return CacheManager.LoadPrefString(KEY_CP, "test");
-
-        return CacheManager.LoadPrefString(KEY_CP, "aord");
     }
     
     public static bool GetMusicSetting()

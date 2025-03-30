@@ -51,13 +51,6 @@ public enum GuildRole : int
     NONE = -1
 }
 
-public enum AvatarType : int
-{
-    HERO = 0,
-    SPECIAL = 1,
-    FRAME = 2
-}
-
 public enum ItemQuality : int
 {
     SILVER = 1,
@@ -72,42 +65,10 @@ public enum ItemQuality : int
     NONE = 999,
 }
 
-public enum Faction : int
+public enum LoginPanelType : int
 {
-    UNKNOWN = 0,
-}
-
-public enum ItemType : int
-{
-    CONSUMABLE = 1,
-    EQUIPMENT = 2,
-    SHARD = 3
-}
-
-public enum GraphicSettingLevel : int
-{
-    QUALITY_VERY_LOW = 0,
-    QUALITY_LOW = 1,
-    QUALITY_MEDIUM = 2,
-    QUALITY_HIGH = 3,
-    QUALITY_VERY_HIGH = 4,
-    QUALITY_ULTRA = 5,
-}
-
-public enum FormatNumberType : int
-{
-    NORMAL = 1,
-    THREE_DOT = 2,
-    K = 3,
-    M = 4
-}
-
-public enum BonusItemKey : int
-{
-    ENERGY = 11,
-    GOLD = 12,
-    GEM = 13,
-    RUBY = 14,
-    USER_EXP = 17,
-    EXP_VIP = 18,
+    LOGIN = 1,
+    REGISTER = 2,
+    FORGET = 3,
+    INIT = 4,
 }

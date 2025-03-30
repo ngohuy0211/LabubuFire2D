@@ -12,7 +12,11 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/04f1cffc017a43b29f178e8488445ed82a200/9c/d9d84093/AccessToken.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/86687984aa954950a9f930559c6147af16a00/d4/21aa07fc/AuthError.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/86687984aa954950a9f930559c6147af16a00/df/35efdc59/FirebaseUser.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/PopupMessgae.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/SliderRunner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/Toast.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/GameData/UserModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@9.0.4/Editor/SceneDragAndDrop.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -66,10 +70,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="12600">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="12600" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -89,6 +93,7 @@
       <workItem from="1743101158583" duration="1401000" />
       <workItem from="1743187298509" duration="1837000" />
       <workItem from="1743275727947" duration="2944000" />
+      <workItem from="1743324337621" duration="5925000" />
     </task>
     <servers />
   </component>

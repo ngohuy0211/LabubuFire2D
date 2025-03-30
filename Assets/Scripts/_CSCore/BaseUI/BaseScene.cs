@@ -8,12 +8,17 @@ using UnityEngine.Serialization;
 
 public class BaseScene : MonoBehaviour
 {
-    private void Awake()
+    protected virtual void Awake()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         AddCameraTouchEffect();
     }
-    
+
+    protected void Start()
+    {
+        
+    }
+
     private void AddCameraTouchEffect()
     {
         GameObject goCamPopup = GameObject.Find("CameraTouchEffect");

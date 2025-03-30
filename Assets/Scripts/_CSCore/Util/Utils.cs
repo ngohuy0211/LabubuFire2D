@@ -350,11 +350,6 @@ class Utils
         return ret;
     }
 
-    public static string GetCp()
-    {
-        return SettingManager.GetCp();
-    }
-
     public static string FormatLongToString(long valueCast, bool isSplit = true)
     {
         string ret = "";
