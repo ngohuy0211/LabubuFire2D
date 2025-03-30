@@ -14,10 +14,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/04f1cffc017a43b29f178e8488445ed82a200/9c/d9d84093/AccessToken.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/86687984aa954950a9f930559c6147af16a00/d4/21aa07fc/AuthError.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/86687984aa954950a9f930559c6147af16a00/df/35efdc59/FirebaseUser.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/PlayerAvatar.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/PopupMessgae.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/SliderRunner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/Toast.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/GameData/DataServerSaver.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/GameData/UserModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@9.0.4/Editor/SceneDragAndDrop.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -96,7 +96,7 @@
       <workItem from="1743275727947" duration="2944000" />
       <workItem from="1743324337621" duration="8037000" />
       <workItem from="1743342698463" duration="1288000" />
-      <workItem from="1743346578295" duration="4042000" />
+      <workItem from="1743346578295" duration="4918000" />
     </task>
     <servers />
   </component>

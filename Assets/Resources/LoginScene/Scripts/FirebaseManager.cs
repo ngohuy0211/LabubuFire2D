@@ -396,6 +396,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
             GameContext.Instance.UserModel.userId = _user.UserId;
             GameContext.Instance.UserModel.userDisplayName = _user.DisplayName;
             GameContext.Instance.UserModel.userEmail = _user.Email;
+            GameContext.Instance.UserModel.avatarUsingId = 1;
             GameContext.Instance.UserModel.userUrlAvatar = _user.PhotoUrl.ToString();
 
             LoginDoneCb?.Invoke();
