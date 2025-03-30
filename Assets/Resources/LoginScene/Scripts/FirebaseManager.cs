@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using Facebook.Unity;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
 using Firebase.Extensions;
 
 public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
@@ -18,10 +19,13 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     private Firebase.Auth.FirebaseAuth _auth;
     private Firebase.Auth.FirebaseUser _user;
     private bool _isGoogleSignInInitialized = false;
+    private DatabaseReference _dbRef;
 
+    public bool userDataLoaded = false;
     public System.Action LoginDoneCb;
     public System.Action RegisterDoneCb;
     public System.Action LogOutDoneCb;
+    public System.Action UpdateUserDataCb;
 
     public void InitFirebase()
     {
@@ -53,6 +57,8 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         //
         if (!FB.IsInitialized) FB.Init(InitCallback, OnHideUnity);
         else FB.ActivateApp();
+        //
+        _dbRef = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     public void LogOut()
@@ -62,6 +68,111 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         GameContext.Instance.ClearData();
         LogOutDoneCb?.Invoke();
     }
+
+    #region User Data
+
+    public void LoadDataUser()
+    {
+        StartCoroutine(DelayLoadDataUser());
+    }
+
+    IEnumerator DelayLoadDataUser()
+    {
+        var dataFromSv = _dbRef.Child("users").Child(GameContext.Instance.UserModel.userId).GetValueAsync();
+        yield return new WaitUntil(predicate: () => dataFromSv.IsCompleted);
+        DataSnapshot snapshot = dataFromSv.Result;
+        string jsonData = snapshot.GetRawJsonValue();
+        if (string.IsNullOrEmpty(jsonData))
+        {
+            string json = JsonUtility.ToJson(GameContext.Instance.UserModel);
+            _dbRef.Child("users").Child(GameContext.Instance.UserModel.userId).SetRawJsonValueAsync(json);   
+        }
+        else
+            GameContext.Instance.UserModel = JsonUtility.FromJson<UserModel>(jsonData);
+
+        userDataLoaded = true;
+    }
+    
+    public void SetUserDisplayName(string value)
+    {
+        GameContext.Instance.UserModel.userDisplayName = value;
+        StartCoroutine(UpdateUserData("userDisplayName", GameContext.Instance.UserModel.userDisplayName));
+    }
+    
+    public void SetUserAvatarId(int value)
+    {
+        GameContext.Instance.UserModel.avatarUsingId = value;
+        StartCoroutine(UpdateUserData("avatarUsingId", GameContext.Instance.UserModel.avatarUsingId));
+    }
+    
+    public void SetOwnerAvatarId(int value)
+    {
+        GameContext.Instance.UserModel.ownAvatars.Add(value);
+        StartCoroutine(UpdateUserData("ownAvatars", GameContext.Instance.UserModel.ownAvatars));
+    }
+    
+    public void SetUserCharacterId(int value)
+    {
+        GameContext.Instance.UserModel.characterUsingId = value;
+        StartCoroutine(UpdateUserData("characterUsingId", GameContext.Instance.UserModel.characterUsingId));
+    }
+    
+    public void SetOwnCharacterId(int value)
+    {
+        GameContext.Instance.UserModel.ownCharacters.Add(value);
+        StartCoroutine(UpdateUserData("ownCharacters", GameContext.Instance.UserModel.ownCharacters));
+    }
+    
+    public void SetUserBulletId(int value)
+    {
+        GameContext.Instance.UserModel.bulletUsingId = value;
+        StartCoroutine(UpdateUserData("bulletUsingId", GameContext.Instance.UserModel.bulletUsingId));
+    }
+    
+    public void SetOwnBulletId(int value)
+    {
+        GameContext.Instance.UserModel.ownBullets.Add(value);
+        StartCoroutine(UpdateUserData("ownBullets", GameContext.Instance.UserModel.ownBullets));
+    }
+    
+    public void AddUserCoin(int value)
+    {
+        GameContext.Instance.UserModel.coin += value;
+        StartCoroutine(UpdateUserData("coin", GameContext.Instance.UserModel.coin));
+    }
+    
+    public void AddUserGem(int value)
+    {
+        GameContext.Instance.UserModel.gem += value;
+        StartCoroutine(UpdateUserData("gem", GameContext.Instance.UserModel.gem));
+    }
+    
+    public void PlusUserCoin(int value)
+    {
+        GameContext.Instance.UserModel.coin -= value;
+        StartCoroutine(UpdateUserData("coin", GameContext.Instance.UserModel.coin));
+    }
+    
+    public void PlusUserGem(int value)
+    {
+        GameContext.Instance.UserModel.gem -= value;
+        StartCoroutine(UpdateUserData("gem", GameContext.Instance.UserModel.gem));
+    }
+    
+    public void SetUserMapLevel(int value)
+    {
+        GameContext.Instance.UserModel.currentMapLevel = value;
+        StartCoroutine(UpdateUserData("currentMapLevel", GameContext.Instance.UserModel.currentMapLevel));  
+    }
+
+    IEnumerator UpdateUserData(object value2, object value3)
+    {
+        var task = _dbRef.Child("users").Child(GameContext.Instance.UserModel.userId).Child(value2.ToString()).SetValueAsync(value3);
+        yield return new WaitUntil(predicate: () => task.IsCompleted);
+        UpdateUserDataCb?.Invoke();
+    }
+    
+    #endregion
 
     #region Login Google
 
@@ -127,11 +238,10 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
                         Debug.LogFormat("User signed in successfully: {0} ({1})",
                             _user.DisplayName, _user.UserId);
 
-                        GameContext.Instance.UserModel.UserId = _user.UserId;
-                        GameContext.Instance.UserModel.UserDisplayName = _user.DisplayName;
-                        GameContext.Instance.UserModel.UserEmail = _user.Email;
-                        GameContext.Instance.UserModel.UserUrlAvatar = _user.PhotoUrl.ToString();
-
+                        GameContext.Instance.UserModel.userId = _user.UserId;
+                        GameContext.Instance.UserModel.userDisplayName = _user.DisplayName;
+                        GameContext.Instance.UserModel.userEmail = _user.Email;
+                        GameContext.Instance.UserModel.userUrlAvatar = _user.PhotoUrl.ToString();
                         LoginDoneCb?.Invoke();
                     }
                 });
@@ -190,10 +300,10 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
                 result.User.DisplayName, result.User.UserId);
             _user = result.User;
 
-            GameContext.Instance.UserModel.UserId = _user.UserId;
-            GameContext.Instance.UserModel.UserDisplayName = _user.DisplayName;
-            GameContext.Instance.UserModel.UserEmail = _user.Email;
-            GameContext.Instance.UserModel.UserUrlAvatar = _user.PhotoUrl.ToString();
+            GameContext.Instance.UserModel.userId = _user.UserId;
+            GameContext.Instance.UserModel.userDisplayName = _user.DisplayName;
+            GameContext.Instance.UserModel.userEmail = _user.Email;
+            GameContext.Instance.UserModel.userUrlAvatar = _user.PhotoUrl.ToString();
 
             LoginDoneCb?.Invoke();
         });
@@ -283,10 +393,10 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
                 result.User.DisplayName, result.User.UserId);
             _user = result.User;
 
-            GameContext.Instance.UserModel.UserId = _user.UserId;
-            GameContext.Instance.UserModel.UserDisplayName = _user.DisplayName;
-            GameContext.Instance.UserModel.UserEmail = _user.Email;
-            GameContext.Instance.UserModel.UserUrlAvatar = _user.PhotoUrl.ToString();
+            GameContext.Instance.UserModel.userId = _user.UserId;
+            GameContext.Instance.UserModel.userDisplayName = _user.DisplayName;
+            GameContext.Instance.UserModel.userEmail = _user.Email;
+            GameContext.Instance.UserModel.userUrlAvatar = _user.PhotoUrl.ToString();
 
             LoginDoneCb?.Invoke();
         });

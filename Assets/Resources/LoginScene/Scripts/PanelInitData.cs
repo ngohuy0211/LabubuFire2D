@@ -30,18 +30,22 @@ public class PanelInitData : MonoBehaviour
 
     private IEnumerator CheckInitDataBeforeLoadHomeScene()
     {
-        //
-        _timerWaitDataLoaded = null;
-        //
-        yield return new WaitForSeconds(0.1f);
-        //
-        LoadSceneWithAsync("HomeScene");
+        if (FirebaseManager.Instance.userDataLoaded)
+        {
+            _timerWaitDataLoaded = null;
+            //
+            yield return new WaitForSeconds(0.1f);
+            //
+            LoadSceneWithAsync("HomeScene");
+        }
     }
 
     private IEnumerator DelayLoadData()
     {
         PlayerInventory.Instance.ClearInventory();
         DbManager.ClearInstance();
+
+        FirebaseManager.Instance.userDataLoaded = false;
         
         float sliderValue = 0.1f;
         _sliderRunner.RunSliderValue(sliderValue);
@@ -76,7 +80,10 @@ public class PanelInitData : MonoBehaviour
         thread.Abort();
 
         List<LoadingInitDataAction> lstAction = new List<LoadingInitDataAction>();
-
+        lstAction.Add(new LoadingInitDataAction("Load User Data", delegate
+        {
+            FirebaseManager.Instance.LoadDataUser();
+        }));
         sliderValue = 0.6f;
 
         float sleepBetweenSending = 0.2f;
