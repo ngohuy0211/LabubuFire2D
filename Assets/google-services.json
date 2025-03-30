@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "277892368516",
+    "firebase_url": "https://labubufire-default-rtdb.firebaseio.com",
     "project_id": "labubufire",
     "storage_bucket": "labubufire.firebasestorage.app"
   },

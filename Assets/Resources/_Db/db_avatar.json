@@ -1,0 +1,22 @@
+[
+ {
+   "Id": 1,
+   "name": "Mặc định",
+   "price": "0,0"
+ },
+ {
+   "Id": 2,
+   "name": "Avatar 1",
+   "price": "0,1000"
+ },
+ {
+   "Id": 3,
+   "name": "Avatar 2",
+   "price": "1,1000"
+ },
+ {
+   "Id": 4,
+   "name": "Avatar 3",
+   "price": "1,1000"
+ }
+]

@@ -5,7 +5,7 @@
    "hp": 100,
    "speedFire": 5,
    "desc": "aaaa",
-   "price": 0
+   "price": "0,0"
  },
  {
    "id": 2,
@@ -13,7 +13,7 @@
    "hp": 100,
    "speedFire": 5,
    "desc": "aaaa",
-   "price": 10000
+   "price": "0,100"
  },
  {
    "id": 3,
@@ -21,7 +21,7 @@
    "hp": 100,
    "speedFire": 5,
    "desc": "aaaa",
-   "price": 10000
+   "price": "1,1000"
  },
  {
    "id": 4,
@@ -29,6 +29,6 @@
    "hp": 100,
    "speedFire": 5,
    "desc": "aaaa",
-   "price": 10000
+   "price": "1,1000"
  }
 ]
