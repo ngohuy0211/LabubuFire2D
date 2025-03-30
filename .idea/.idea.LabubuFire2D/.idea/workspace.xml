@@ -17,6 +17,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/PopupMessgae.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/SliderRunner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/BaseUI/Toast.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/GameData/DataServerSaver.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/_CSCore/GameData/UserModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@9.0.4/Editor/SceneDragAndDrop.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -70,10 +71,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="12600">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="12600" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -93,7 +94,8 @@
       <workItem from="1743101158583" duration="1401000" />
       <workItem from="1743187298509" duration="1837000" />
       <workItem from="1743275727947" duration="2944000" />
-      <workItem from="1743324337621" duration="5925000" />
+      <workItem from="1743324337621" duration="8037000" />
+      <workItem from="1743342698463" duration="33000" />
     </task>
     <servers />
   </component>

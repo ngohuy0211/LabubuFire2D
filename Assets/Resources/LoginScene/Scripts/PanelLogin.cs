@@ -85,12 +85,12 @@ public class PanelLogin : MonoBehaviour
     
     private void OnClickLoginGoogle()
     {
-        FirebaseManager.Instance.LoginWithFb();
+        FirebaseManager.Instance.LoginWithGoogle();
     }
     
     private void OnClickLoginFacebook()
     {
-        FirebaseManager.Instance.LoginWithGoogle();
+        FirebaseManager.Instance.LoginWithFb();
     }
     
     #endregion
