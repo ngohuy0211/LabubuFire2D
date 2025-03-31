@@ -1,42 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemAvatar : MonoBehaviour
+public class ItemAvatar : ItemModel
 {
-    #region Define
-
-    #endregion
-
-    #region Properties
-
-    #endregion
-
-    #region Core MonoBehavior
-
-    // Start is called before the first frame update
-    void Start()
+    public ItemConsumable Price { get; set; }
+    public bool IsOwn { get; set; }
+    public bool IsUsing { get; set; }
+    
+    public override void UseItem(Action act)
     {
-        
+        act?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override ItemModel Clone()
     {
-        
+        return (ItemAvatar)this.MemberwiseClone();
     }
-
-    #endregion
-
-    #region Public Method
-
-    #endregion
-
-    #region Private Method
-
-    #endregion
-
-    #region Network
-
-    #endregion
 }

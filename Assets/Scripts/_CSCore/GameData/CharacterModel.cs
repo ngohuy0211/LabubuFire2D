@@ -1,42 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterModel : MonoBehaviour
+public class CharacterModel : ItemModel
 {
-    #region Define
-
-    #endregion
-
-    #region Properties
-
-    #endregion
-
-    #region Core MonoBehavior
-
-    // Start is called before the first frame update
-    void Start()
+    public int Hp { get; set; }
+    public int SpeedFire { get; set; }
+    public ItemConsumable Price { get; set; }
+    public bool IsOwn { get; set; }
+    public bool IsUsing { get; set; }
+    
+    public override void UseItem(Action act)
     {
-        
+        act?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override ItemModel Clone()
     {
-        
+        return (CharacterModel)this.MemberwiseClone();
     }
-
-    #endregion
-
-    #region Public Method
-
-    #endregion
-
-    #region Private Method
-
-    #endregion
-
-    #region Network
-
-    #endregion
 }

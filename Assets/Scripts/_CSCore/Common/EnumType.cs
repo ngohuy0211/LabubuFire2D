@@ -72,3 +72,14 @@ public enum LoginPanelType : int
     FORGET = 3,
     INIT = 4,
 }
+
+public enum ItemDropType : int
+{
+    NONE = 0,
+    PLUS = 1,
+    MINUS = 2,
+    BULLET = 3,
+    SPEED_FIRE = 4,
+    HEAL_HP = 5,
+    ADD_COIN = 6
+}

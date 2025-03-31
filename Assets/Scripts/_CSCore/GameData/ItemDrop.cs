@@ -1,42 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDrop : MonoBehaviour
+public class ItemDrop : ItemModel
 {
-    #region Define
+    public int Hp { get; set; }
+    public int Value { get; set; }
+    public ItemQuality Quality { get; set; }
+    public int Damage { get; set; }
+    public ItemDropType Type { get; set; }
+    public bool Selected { get; set; }= false;
 
-    #endregion
-
-    #region Properties
-
-    #endregion
-
-    #region Core MonoBehavior
-
-    // Start is called before the first frame update
-    void Start()
+    public ItemDrop(bool selected = false)
     {
-        
+        this.Selected = selected;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public override void UseItem(Action act)
     {
-        
+        act?.Invoke();
     }
 
-    #endregion
-
-    #region Public Method
-
-    #endregion
-
-    #region Private Method
-
-    #endregion
-
-    #region Network
-
-    #endregion
+    public override ItemModel Clone()
+    {
+        return (ItemDrop)this.MemberwiseClone();
+    }
 }
