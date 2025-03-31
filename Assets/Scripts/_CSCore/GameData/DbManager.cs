@@ -31,10 +31,24 @@ public class DbManager
     }
 
     #region Define data
+
+    private List<ItemConsumable> _lstItemConsumable = new List<ItemConsumable>();
+    private List<ItemAvatar> _lstItemAvatar = new List<ItemAvatar>();
+    private List<ItemBullet> _lstItemBullet = new List<ItemBullet>();
+    private List<ItemDrop> _lstItemDrop = new List<ItemDrop>();
+    private Dictionary<int, MapModel> _dictMapModel = new Dictionary<int, MapModel>();
+    private List<CharacterModel> _lstCharacterModel = new List<CharacterModel>();
     
     #endregion
 
     #region List DB name
+
+    private const string ItemConsum = "ItemConsum";
+    private const string ItemAvatar = "ItemAvatar";
+    private const string ItemBullet = "ItemBullet";
+    private const string ItemDrop = "ItemDrop";
+    private const string MapModel = "MapModel";
+    private const string CharacterModel = "CharacterModel";
     
     #endregion
 
@@ -59,7 +73,83 @@ public class DbManager
         //TrackTime("");
         //
         List<LoadingInitDataAction> lstAction = new List<LoadingInitDataAction>();
+        lstAction.Add(new LoadingInitDataAction(ItemConsum, delegate
+        {
+            string dbFile = "db_item_consumable";
+            string json = ResourceHelper.LoadDbTextContent(dbFile);
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogError("------ Error loading db file: " + dbFile);
+                return;
+            }
 
+            dicFileDb.Add(ItemConsum, json);
+        }));
+        
+        lstAction.Add(new LoadingInitDataAction(ItemAvatar, delegate
+        {
+            string dbFile = "db_avatar";
+            string json = ResourceHelper.LoadDbTextContent(dbFile);
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogError("------ Error loading db file: " + dbFile);
+                return;
+            }
+
+            dicFileDb.Add(ItemAvatar, json);
+        }));
+        
+        lstAction.Add(new LoadingInitDataAction(ItemBullet, delegate
+        {
+            string dbFile = "db_bullet";
+            string json = ResourceHelper.LoadDbTextContent(dbFile);
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogError("------ Error loading db file: " + dbFile);
+                return;
+            }
+
+            dicFileDb.Add(ItemBullet, json);
+        }));
+        
+        lstAction.Add(new LoadingInitDataAction(ItemDrop, delegate
+        {
+            string dbFile = "db_item_drop";
+            string json = ResourceHelper.LoadDbTextContent(dbFile);
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogError("------ Error loading db file: " + dbFile);
+                return;
+            }
+
+            dicFileDb.Add(ItemDrop, json);
+        }));
+        
+        lstAction.Add(new LoadingInitDataAction(MapModel, delegate
+        {
+            string dbFile = "db_map";
+            string json = ResourceHelper.LoadDbTextContent(dbFile);
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogError("------ Error loading db file: " + dbFile);
+                return;
+            }
+
+            dicFileDb.Add(MapModel, json);
+        }));
+        
+        lstAction.Add(new LoadingInitDataAction(CharacterModel, delegate
+        {
+            string dbFile = "db_character";
+            string json = ResourceHelper.LoadDbTextContent(dbFile);
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogError("------ Error loading db file: " + dbFile);
+                return;
+            }
+
+            dicFileDb.Add(CharacterModel, json);
+        }));
 
         int numAction = lstAction.Count;
         if (numAction < 0)
@@ -129,7 +219,23 @@ public class DbManager
 
         List<LoadingInitDataAction> lstAction = new List<LoadingInitDataAction>();
         //
+        lstAction.Add(new LoadingInitDataAction(ItemConsum,
+            delegate { this.LoadDbItemConsumable((string)dicFileDb[ItemConsum]); }));
         
+        lstAction.Add(new LoadingInitDataAction(ItemAvatar,
+            delegate { this.LoadDbItemAvatar((string)dicFileDb[ItemAvatar]); }));
+        
+        lstAction.Add(new LoadingInitDataAction(ItemBullet,
+            delegate { this.LoadDbItemBullet((string)dicFileDb[ItemBullet]); }));
+        
+        lstAction.Add(new LoadingInitDataAction(ItemDrop,
+            delegate { this.LoadDbItemDrop((string)dicFileDb[ItemDrop]); }));
+        
+        lstAction.Add(new LoadingInitDataAction(MapModel,
+            delegate { this.LoadDbMapModel((string)dicFileDb[MapModel]); }));
+        
+        lstAction.Add(new LoadingInitDataAction(CharacterModel,
+            delegate { this.LoadDbCharacterModel((string)dicFileDb[CharacterModel]); }));
         //
         int numAction = lstAction.Count;
         if (numAction < 0)
@@ -172,6 +278,60 @@ public class DbManager
         //
         //Debug.LogError("------- TOTAL: " + totalTime);
     }
+
+    #endregion
+
+    #region Item Consumable
+
+    private void LoadDbItemConsumable(string json)
+    {
+        
+    }
+
+    #endregion
+
+    #region Item Avatar
+
+    private void LoadDbItemAvatar(string json)
+    {
+        
+    }
+
+    #endregion
+
+    #region Item Bullet
+
+    private void LoadDbItemBullet(string json)
+    {
+        
+    }
+
+    #endregion
+
+    #region Item Drop
+
+    private void LoadDbItemDrop(string json)
+    {
+        
+    }    
+
+    #endregion
+    
+    #region Map Model
+
+    private void LoadDbMapModel(string json)
+    {
+        
+    }    
+
+    #endregion
+    
+    #region Character Model
+
+    private void LoadDbCharacterModel(string json)
+    {
+        
+    }    
 
     #endregion
 }

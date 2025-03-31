@@ -20,6 +20,30 @@ public class ResourceHelper : MonoBehaviour
 
         return textAsset?.bytes;
     }
+    
+    public static string LoadDbTextContent(string fileDb)
+    {
+        return LoadDbTextContentByLanguage(fileDb, Constants.DEFAULT_LANGUAGE);
+    }
+    
+    private static string LoadDbTextContentByLanguage(string fileDb, Language language)
+    {
+        string textDb = "";
+        string pathDbFile = "_Pack/Db/" + fileDb;
+        //
+        if (string.IsNullOrEmpty(textDb))
+        {
+            TextAsset textAsset = Resources.Load<TextAsset>(pathDbFile);
+            //
+            if (textAsset != null)
+                return textAsset.text;
+            else
+                return "";
+        }
+        else
+            return textDb;
+    }
+
 
     #endregion
     
