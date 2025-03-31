@@ -14,7 +14,7 @@ public class BaseScene : MonoBehaviour
         AddCameraTouchEffect();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         
     }
