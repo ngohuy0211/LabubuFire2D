@@ -14,7 +14,7 @@ public class ResourceHelper : MonoBehaviour
 
     private static byte[] LoadDbBinContentByLanguage(string fileDb, Language language)
     {
-        string pathDbFile = $"Db/{fileDb}";
+        string pathDbFile = "_Db/" + fileDb;
         
         TextAsset textAsset = Resources.Load<TextAsset>(pathDbFile);
 
@@ -29,7 +29,7 @@ public class ResourceHelper : MonoBehaviour
     private static string LoadDbTextContentByLanguage(string fileDb, Language language)
     {
         string textDb = "";
-        string pathDbFile = "_Pack/Db/" + fileDb;
+        string pathDbFile = "_Db/" + fileDb;
         //
         if (string.IsNullOrEmpty(textDb))
         {

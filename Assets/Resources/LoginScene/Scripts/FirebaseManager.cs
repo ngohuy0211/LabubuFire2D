@@ -26,6 +26,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     public System.Action RegisterDoneCb;
     public System.Action LogOutDoneCb;
     public System.Action UpdateUserDataCb;
+    public System.Action GetUserTopDoneCb;
 
     public void InitFirebase()
     {
@@ -70,6 +71,31 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     }
 
     #region User Data
+
+    public void GetAllUserTop100()
+    {
+        StartCoroutine(DelayGetAllUserTop100());
+    }
+    
+    IEnumerator DelayGetAllUserTop100()
+    {
+        var dataUsers = _dbRef.Child("users").OrderByChild("currentMapLevel").LimitToLast(100).GetValueAsync();
+        yield return new WaitUntil(predicate: () => dataUsers.IsCompleted);
+        DataSnapshot snapshot = dataUsers.Result;
+        GameContext.Instance.LstUsersModel.Clear();
+        foreach (var data in snapshot.Children)
+        {
+            UserModel user = new UserModel();
+            user.userId = data.Child("userId").Value.ToString();
+            user.userDisplayName = data.Child("userDisplayName").Value.ToString();
+            user.userUrlAvatar = data.Child("userUrlAvatar").Value.ToString();
+            user.avatarUsingId = int.Parse(data.Child("avatarUsingId").Value.ToString());
+            user.currentMapLevel = int.Parse(data.Child("currentMapLevel").Value.ToString());
+            //
+            GameContext.Instance.LstUsersModel.Add(user);
+        }
+        GetUserTopDoneCb?.Invoke();
+    }
 
     public void LoadDataUser()
     {

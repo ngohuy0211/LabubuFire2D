@@ -71,10 +71,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="7132">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="7132" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -97,7 +97,8 @@
       <workItem from="1743324337621" duration="8037000" />
       <workItem from="1743342698463" duration="1288000" />
       <workItem from="1743346578295" duration="4918000" />
-      <workItem from="1743431723313" duration="3050000" />
+      <workItem from="1743431723313" duration="3656000" />
+      <workItem from="1743512486586" duration="5241000" />
     </task>
     <servers />
   </component>
@@ -105,5 +106,12 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#Firebase.Database.FirebaseDatabase" memberName="App" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
