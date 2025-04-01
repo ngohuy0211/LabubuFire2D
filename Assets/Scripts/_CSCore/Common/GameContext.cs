@@ -14,6 +14,9 @@ public class GameContext : Singleton<GameContext>
     public List<BasePopup> PopupActives = new List<BasePopup>();
     public bool MusicOn = true;
     public bool SoundOn = true;
+    public string CurrentVersionApp = "";
+    public string LinkDownAndroid = "";
+    public string LinkDownIos = "";
     
     //
     //chi dung cho thanh toan SDK Voi Doi Tac thoi,

@@ -12,10 +12,7 @@ public class PopupMessage : BasePopup
     [SerializeField] Text textAction2;
     [SerializeField] GameObject buttonAction1;
     [SerializeField] GameObject buttonAction2;
-    [SerializeField] GameObject boxCheck;
-    [SerializeField] GameObject goTick;
     [SerializeField] Button btnClose;
-    [SerializeField] ListSprite imgButton;
     
     private System.Action _action1Cb, _action2Cb;
     private System.Action<bool> _actClickCheckBoxCb;
@@ -23,11 +20,8 @@ public class PopupMessage : BasePopup
     protected override void Awake()
     {
         base.Awake();
-        if (boxCheck != null)
-            boxCheck.SetActive(false);
         UIHelper.AddButtonClickNormal(buttonAction1.GetComponent<Button>(), ButtonAction1Click);
         UIHelper.AddButtonClickNormal(buttonAction2.GetComponent<Button>(), ButtonAction2Click);
-        UIHelper.AddButtonClickNormal(boxCheck.transform.GetChild(0).GetComponent<Button>(), OnClickCheckBox);
         UIHelper.AddButtonClickClose(btnClose, ClosePopup);
     }
 
@@ -84,8 +78,6 @@ public class PopupMessage : BasePopup
         textMessage.text = msg;
         textAction1.text = "Đồng ý";
         textAction2.text = "Hủy";
-        buttonAction1.GetComponent<Image>().sprite = imgButton.GetSprite(1);
-        buttonAction1.GetComponent<Image>().sprite = imgButton.GetSprite(3);
         buttonAction1.transform.GetChild(0).GetComponent<Text>().color = new Color(36 / 255f, 65 / 255f, 93 / 255f);
         _action1Cb = action;
     }
@@ -96,8 +88,6 @@ public class PopupMessage : BasePopup
         textMessage.text = msg;
         textAction1.text = "Đồng ý";
         textAction2.text = "Hủy";
-        buttonAction1.GetComponent<Image>().sprite = imgButton.GetSprite(1);
-        buttonAction1.GetComponent<Image>().sprite = imgButton.GetSprite(3);
         buttonAction1.transform.GetChild(0).GetComponent<Text>().color = new Color(84 / 255f, 27 / 255f, 27 / 255f);
         _action1Cb = action;
     }
@@ -126,26 +116,5 @@ public class PopupMessage : BasePopup
         popupMess.SetData(title, message, action1, action1Cb, action2, action2Cb);
         //
         return popupMess;
-    }
-
-    private bool _isSelectCheckBox = false;
-
-    private void OnClickCheckBox()
-    {
-        _isSelectCheckBox = !_isSelectCheckBox;
-        goTick.SetActive(_isSelectCheckBox);
-        _actClickCheckBoxCb?.Invoke(_isSelectCheckBox);
-    }
-
-    public void SetCbCheckBox(System.Action<bool> cb)
-    {
-        _actClickCheckBoxCb = cb;
-    }
-
-    public void ShowCheckBox(bool valueShow)
-    {
-        _isSelectCheckBox = false;
-        goTick.SetActive(_isSelectCheckBox);
-        boxCheck.SetActive(valueShow);
     }
 }

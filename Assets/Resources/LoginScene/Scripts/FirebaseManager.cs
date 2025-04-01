@@ -60,6 +60,8 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         else FB.ActivateApp();
         //
         _dbRef = FirebaseDatabase.DefaultInstance.RootReference;
+        //
+        GetDataApp();
     }
 
     public void LogOut()
@@ -69,6 +71,25 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         GameContext.Instance.ClearData();
         LogOutDoneCb?.Invoke();
     }
+
+    #region Data App
+
+    private void GetDataApp()
+    {
+        StartCoroutine(DelayGetDataApp());
+    }
+
+    IEnumerator DelayGetDataApp()
+    {
+        var dataApp = _dbRef.Child("dataApp").GetValueAsync();
+        yield return new WaitUntil(predicate: () => dataApp.IsCompleted);
+        DataSnapshot snapshot = dataApp.Result;
+        GameContext.Instance.CurrentVersionApp = snapshot.Child("version").Value.ToString();
+        GameContext.Instance.LinkDownAndroid = snapshot.Child("link_download_android").Value.ToString();
+        GameContext.Instance.LinkDownIos = snapshot.Child("link_download_ios").Value.ToString();
+    }
+
+    #endregion
 
     #region User Data
 
