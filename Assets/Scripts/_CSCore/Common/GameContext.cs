@@ -28,5 +28,6 @@ public class GameContext : Singleton<GameContext>
     {
         UserModel = new UserModel();
         StaticData.Reset();
+        PlayerInventory.Instance.ClearInventory();
     }
 }

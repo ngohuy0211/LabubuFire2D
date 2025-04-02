@@ -137,6 +137,36 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         else
             GameContext.Instance.UserModel = JsonUtility.FromJson<UserModel>(jsonData);
 
+        List<int> lstAvatarId = GameContext.Instance.UserModel.ownAvatars;
+        foreach (var avatarId in lstAvatarId)
+        {
+            var item = DbManager.GetInstance().GetItemAvatarCopy(avatarId);
+            if (item == null) continue;
+            item.IsUsing = avatarId == GameContext.Instance.UserModel.avatarUsingId;
+            item.IsOwn = true;
+            PlayerInventory.Instance.ItemAvatarManager.AddItem(item);
+        }
+        
+        List<int> lstBulletId = GameContext.Instance.UserModel.ownBullets;
+        foreach (var bulletId in lstBulletId)
+        {
+            var item = DbManager.GetInstance().GetItemBulletCopy(bulletId);
+            if (item == null) continue;
+            item.IsUsing = bulletId == GameContext.Instance.UserModel.bulletUsingId;
+            item.IsOwn = true;
+            PlayerInventory.Instance.ItemBulletManager.AddItem(item);
+        }
+        
+        List<int> lstCharacterId = GameContext.Instance.UserModel.ownCharacters;
+        foreach (var charId in lstCharacterId)
+        {
+            var item = DbManager.GetInstance().GetCharacterCopy(charId);
+            if (item == null) continue;
+            item.IsUsing = charId == GameContext.Instance.UserModel.characterUsingId;
+            item.IsOwn = true;
+            PlayerInventory.Instance.ItemCharacterManager.AddItem(item);
+        }
+        
         userDataLoaded = true;
     }
     

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using SimpleJSON;
 using Newtonsoft.Json;
@@ -283,6 +284,12 @@ public class DbManager
 
     #region Item Consumable
 
+    [CanBeNull]
+    public ItemConsumable GetItemConsumableCopy(int itemKey)
+    {
+        return (ItemConsumable) _lstItemConsumable.Find(c => c.ItemKey == itemKey).Clone();
+    }
+    
     private void LoadDbItemConsumable(string json)
     {
         
@@ -292,6 +299,12 @@ public class DbManager
 
     #region Item Avatar
 
+    [CanBeNull]
+    public ItemAvatar GetItemAvatarCopy(int itemKey)
+    {
+        return (ItemAvatar) _lstItemAvatar.Find(c => c.ItemKey == itemKey).Clone();
+    }
+    
     private void LoadDbItemAvatar(string json)
     {
         
@@ -301,6 +314,12 @@ public class DbManager
 
     #region Item Bullet
 
+    [CanBeNull]
+    public ItemBullet GetItemBulletCopy(int itemKey)
+    {
+        return (ItemBullet) _lstItemBullet.Find(c => c.ItemKey == itemKey).Clone();
+    }
+    
     private void LoadDbItemBullet(string json)
     {
         
@@ -309,6 +328,12 @@ public class DbManager
     #endregion
 
     #region Item Drop
+    
+    [CanBeNull]
+    public ItemDrop GetItemDropCopy(int itemKey)
+    {
+        return (ItemDrop) _lstItemDrop.Find(c => c.ItemKey == itemKey).Clone();
+    }
 
     private void LoadDbItemDrop(string json)
     {
@@ -318,7 +343,7 @@ public class DbManager
     #endregion
     
     #region Map Model
-
+    
     private void LoadDbMapModel(string json)
     {
         
@@ -328,6 +353,12 @@ public class DbManager
     
     #region Character Model
 
+    [CanBeNull]
+    public CharacterModel GetCharacterCopy(int itemKey)
+    {
+        return (CharacterModel) _lstCharacterModel.Find(c => c.ItemKey == itemKey).Clone();
+    }
+    
     private void LoadDbCharacterModel(string json)
     {
         
