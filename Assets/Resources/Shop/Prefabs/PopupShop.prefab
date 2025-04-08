@@ -216,6 +216,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026e2a9cc6bc070498393322c8cba131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goContent: {fileID: 9115063778549041100}
+  setToLast: 1
+  gridPoolChar: {fileID: 1581353029786305729}
+  gridPoolBullet: {fileID: 4746638578919111736}
+  textTitle: {fileID: 3709086468814879468}
+  buttonClose: {fileID: 7645924624587388246}
+  buttonClose1: {fileID: 7398711657876240348}
+  tabManager: {fileID: 7478840608900411236}
 --- !u!222 &1927265686603054965
 CanvasRenderer:
   m_ObjectHideFlags: 0
