@@ -67,6 +67,7 @@ public enum ItemQuality : int
 
 public enum LoginPanelType : int
 {
+    NONE = 0,
     LOGIN = 1,
     REGISTER = 2,
     FORGET = 3,

@@ -71,7 +71,7 @@ public class HomeScene : BaseScene
     
     private void OnClickIAP()
     {
-        
+        Toast.ShowUp("IAP - Coming soon");
     }
 
     #endregion

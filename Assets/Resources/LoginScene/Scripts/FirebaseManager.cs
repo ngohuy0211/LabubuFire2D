@@ -22,6 +22,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
     private DatabaseReference _dbRef;
 
     public bool userDataLoaded = false;
+    public System.Action GetDataAppDoneCb;
     public System.Action LoginDoneCb;
     public System.Action RegisterDoneCb;
     public System.Action LogOutDoneCb;
@@ -87,6 +88,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         GameContext.Instance.CurrentVersionApp = snapshot.Child("version").Value.ToString();
         GameContext.Instance.LinkDownAndroid = snapshot.Child("link_download_android").Value.ToString();
         GameContext.Instance.LinkDownIos = snapshot.Child("link_download_ios").Value.ToString();
+        GetDataAppDoneCb?.Invoke();
     }
 
     #endregion

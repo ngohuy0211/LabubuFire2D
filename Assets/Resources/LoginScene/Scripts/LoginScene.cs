@@ -15,17 +15,21 @@ public class LoginScene : BaseScene
     protected override void Awake()
     {
         base.Awake();
-        FirebaseManager.Instance.InitFirebase();
-        SetPanelStatus(LoginPanelType.LOGIN);
-        //
         ScreenTouchIndicator.GetInstance();
-        FirebaseManager.Instance.LoginDoneCb += CheckVersion;
-        FirebaseManager.Instance.RegisterDoneCb = () => SetPanelStatus(LoginPanelType.LOGIN);
+        SetPanelStatus(LoginPanelType.NONE);
         //
-        panelLogin.SetClickRegisterCb(() => SetPanelStatus(LoginPanelType.REGISTER));
-        panelLogin.SetClickForgotPassCb(() => SetPanelStatus(LoginPanelType.FORGET));
-        panelRegister.SetCloseCb(() => SetPanelStatus(LoginPanelType.LOGIN));
-        panelForgetPass.SetCloseCb(() => SetPanelStatus(LoginPanelType.LOGIN));
+        FirebaseManager.Instance.InitFirebase();
+        FirebaseManager.Instance.GetDataAppDoneCb = delegate
+        {
+            SetPanelStatus(LoginPanelType.LOGIN);
+            FirebaseManager.Instance.LoginDoneCb += CheckVersion;
+            FirebaseManager.Instance.RegisterDoneCb = () => SetPanelStatus(LoginPanelType.LOGIN);
+            //
+            panelLogin.SetClickRegisterCb(() => SetPanelStatus(LoginPanelType.REGISTER));
+            panelLogin.SetClickForgotPassCb(() => SetPanelStatus(LoginPanelType.FORGET));
+            panelRegister.SetCloseCb(() => SetPanelStatus(LoginPanelType.LOGIN));
+            panelForgetPass.SetCloseCb(() => SetPanelStatus(LoginPanelType.LOGIN));  
+        };
     }
 
     private void SetPanelStatus(LoginPanelType type)
