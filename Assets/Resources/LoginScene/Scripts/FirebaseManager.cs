@@ -182,11 +182,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         StartCoroutine(UpdateUserData("avatarUsingId", GameContext.Instance.UserModel.avatarUsingId));
     }
     
-    public void SetOwnerAvatarId(int value)
-    {
-        GameContext.Instance.UserModel.ownAvatars.Add(value);
-        StartCoroutine(UpdateUserData("ownAvatars", GameContext.Instance.UserModel.ownAvatars));
-    }
+    public void SetOwnerAvatar() => StartCoroutine(UpdateUserData("ownAvatars", GameContext.Instance.UserModel.ownAvatars));
     
     public void SetUserCharacterId(int value)
     {
@@ -194,11 +190,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         StartCoroutine(UpdateUserData("characterUsingId", GameContext.Instance.UserModel.characterUsingId));
     }
     
-    public void SetOwnCharacterId(int value)
-    {
-        GameContext.Instance.UserModel.ownCharacters.Add(value);
-        StartCoroutine(UpdateUserData("ownCharacters", GameContext.Instance.UserModel.ownCharacters));
-    }
+    public void SetOwnCharacter() => StartCoroutine(UpdateUserData("ownCharacters", GameContext.Instance.UserModel.ownCharacters));
     
     public void SetUserBulletId(int value)
     {
@@ -206,11 +198,7 @@ public class FirebaseManager : SingletonFreeAlive<FirebaseManager>
         StartCoroutine(UpdateUserData("bulletUsingId", GameContext.Instance.UserModel.bulletUsingId));
     }
     
-    public void SetOwnBulletId(int value)
-    {
-        GameContext.Instance.UserModel.ownBullets.Add(value);
-        StartCoroutine(UpdateUserData("ownBullets", GameContext.Instance.UserModel.ownBullets));
-    }
+    public void SetOwnBullet() => StartCoroutine(UpdateUserData("ownBullets", GameContext.Instance.UserModel.ownBullets));
     
     public void AddUserCoin(int value)
     {

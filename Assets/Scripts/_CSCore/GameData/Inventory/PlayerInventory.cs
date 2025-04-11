@@ -28,5 +28,26 @@ public class PlayerInventory : Singleton<PlayerInventory>
         ItemBulletManager.Clear();
         ItemCharacterManager.Clear();
     }
-    
+
+    public void UpdateInventory(object item)
+    {
+        switch (item)
+        {
+            case ItemBullet itemBullet:
+                ItemBulletManager.AddItem(itemBullet);
+                GameContext.Instance.UserModel.ownBullets.Add(itemBullet.ItemKey);
+                FirebaseManager.Instance.SetOwnBullet();
+                break;
+            case CharacterModel character:
+                ItemCharacterManager.AddItem(character);
+                GameContext.Instance.UserModel.ownCharacters.Add(character.ItemKey);
+                FirebaseManager.Instance.SetOwnCharacter();
+                break;
+            case ItemAvatar itemAvatar:
+                ItemAvatarManager.AddItem(itemAvatar);
+                GameContext.Instance.UserModel.ownAvatars.Add(itemAvatar.ItemKey);
+                FirebaseManager.Instance.SetOwnerAvatar();
+                break;
+        }
+    }
 }

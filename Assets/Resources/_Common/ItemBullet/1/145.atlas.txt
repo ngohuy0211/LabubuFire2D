@@ -1,0 +1,34 @@
+
+145.png
+size: 392,516
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 2, 2
+  size: 510, 233
+  orig: 510, 233
+  offset: 0, 0
+  index: -1
+vay-duoi
+  rotate: true
+  xy: 237, 175
+  size: 165, 133
+  orig: 165, 133
+  offset: 0, 0
+  index: -1
+vay-ngang
+  rotate: false
+  xy: 237, 59
+  size: 91, 114
+  orig: 91, 114
+  offset: 0, 0
+  index: -1
+vayrten
+  rotate: true
+  xy: 237, 342
+  size: 170, 152
+  orig: 170, 152
+  offset: 0, 0
+  index: -1

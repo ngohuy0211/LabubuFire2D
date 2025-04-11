@@ -66,7 +66,7 @@ public class HomeScene : BaseScene
     
     private void OnClickShop()
     {
-        
+        BasePopup.ShowPopup<PopupShop>(PopupPath.POPUP_SHOP);
     }
     
     private void OnClickIAP()

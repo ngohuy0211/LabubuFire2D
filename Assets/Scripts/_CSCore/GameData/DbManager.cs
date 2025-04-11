@@ -316,6 +316,11 @@ public class DbManager
         return (ItemAvatar) _lstItemAvatar.Find(c => c.ItemKey == itemKey).Clone();
     }
 
+    public List<ItemAvatar> GetListAvatar()
+    {
+        return _lstItemAvatar;
+    }
+
     private void LoadDbItemAvatar(string json)
     {
         _lstItemAvatar = new List<ItemAvatar>();
@@ -341,6 +346,11 @@ public class DbManager
     public ItemBullet GetItemBulletCopy(int itemKey)
     {
         return (ItemBullet) _lstItemBullet.Find(c => c.ItemKey == itemKey).Clone();
+    }
+
+    public List<ItemBullet> GetListBullet()
+    {
+        return _lstItemBullet;
     }
 
     private void LoadDbItemBullet(string json)
@@ -435,6 +445,11 @@ public class DbManager
         return (CharacterModel) _lstCharacterModel.Find(c => c.ItemKey == itemKey).Clone();
     }
 
+    public List<CharacterModel> GetListCharacter()
+    {
+        return _lstCharacterModel;
+    }
+    
     private void LoadDbCharacterModel(string json)
     {
         _lstCharacterModel = new List<CharacterModel>();

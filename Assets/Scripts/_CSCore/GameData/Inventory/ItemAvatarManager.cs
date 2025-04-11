@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -38,6 +39,11 @@ public class ItemAvatarManager
     public List<ItemAvatar> GetAllItems()
     {
         return _itemRepository.GetAllItems();
+    }
+    
+    public List<int> GetListItemKey()
+    {
+        return _itemRepository.GetAllItems().Select(character => character.ItemKey).ToList();
     }
     
     public void Clear()
