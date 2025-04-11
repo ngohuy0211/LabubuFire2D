@@ -1,34 +1,34 @@
 [
- {
-   "id": 1,
-   "name": "Labubu 1",
-   "hp": 100,
-   "speedFire": 5,
-   "desc": "aaaa",
-   "price": "0,0"
- },
- {
-   "id": 2,
-   "name": "Labubu 2",
-   "hp": 100,
-   "speedFire": 5,
-   "desc": "aaaa",
-   "price": "0,100"
- },
- {
-   "id": 3,
-   "name": "Labubu 3",
-   "hp": 100,
-   "speedFire": 5,
-   "desc": "aaaa",
-   "price": "1,1000"
- },
- {
-   "id": 4,
-   "name": "Labubu 4",
-   "hp": 100,
-   "speedFire": 5,
-   "desc": "aaaa",
-   "price": "1,1000"
- }
+  {
+    "id": 1,
+    "name": "Labubu 1",
+    "hp": 100,
+    "speedFire": 5,
+    "desc": "aaaa",
+    "price": "[1,0]"
+  },
+  {
+    "id": 2,
+    "name": "Labubu 2",
+    "hp": 100,
+    "speedFire": 5,
+    "desc": "aaaa",
+    "price": "[1,100]"
+  },
+  {
+    "id": 3,
+    "name": "Labubu 3",
+    "hp": 100,
+    "speedFire": 5,
+    "desc": "aaaa",
+    "price": "[2,1000]"
+  },
+  {
+    "id": 4,
+    "name": "Labubu 4",
+    "hp": 100,
+    "speedFire": 5,
+    "desc": "aaaa",
+    "price": "[2,1000]"
+  }
 ]

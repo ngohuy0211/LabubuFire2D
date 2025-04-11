@@ -37,9 +37,9 @@ public class DbManager
     private List<ItemAvatar> _lstItemAvatar = new List<ItemAvatar>();
     private List<ItemBullet> _lstItemBullet = new List<ItemBullet>();
     private List<ItemDrop> _lstItemDrop = new List<ItemDrop>();
-    private Dictionary<int, MapModel> _dictMapModel = new Dictionary<int, MapModel>();
+    private Dictionary<int, List<MapModel>> _dictMapModel = new Dictionary<int, List<MapModel>>();
     private List<CharacterModel> _lstCharacterModel = new List<CharacterModel>();
-    
+
     #endregion
 
     #region List DB name
@@ -50,7 +50,7 @@ public class DbManager
     private const string ItemDrop = "ItemDrop";
     private const string MapModel = "MapModel";
     private const string CharacterModel = "CharacterModel";
-    
+
     #endregion
 
     #region READ DB
@@ -86,7 +86,7 @@ public class DbManager
 
             dicFileDb.Add(ItemConsum, json);
         }));
-        
+
         lstAction.Add(new LoadingInitDataAction(ItemAvatar, delegate
         {
             string dbFile = "db_avatar";
@@ -99,7 +99,7 @@ public class DbManager
 
             dicFileDb.Add(ItemAvatar, json);
         }));
-        
+
         lstAction.Add(new LoadingInitDataAction(ItemBullet, delegate
         {
             string dbFile = "db_bullet";
@@ -112,7 +112,7 @@ public class DbManager
 
             dicFileDb.Add(ItemBullet, json);
         }));
-        
+
         lstAction.Add(new LoadingInitDataAction(ItemDrop, delegate
         {
             string dbFile = "db_item_drop";
@@ -125,7 +125,7 @@ public class DbManager
 
             dicFileDb.Add(ItemDrop, json);
         }));
-        
+
         lstAction.Add(new LoadingInitDataAction(MapModel, delegate
         {
             string dbFile = "db_map";
@@ -138,7 +138,7 @@ public class DbManager
 
             dicFileDb.Add(MapModel, json);
         }));
-        
+
         lstAction.Add(new LoadingInitDataAction(CharacterModel, delegate
         {
             string dbFile = "db_character";
@@ -221,22 +221,22 @@ public class DbManager
         List<LoadingInitDataAction> lstAction = new List<LoadingInitDataAction>();
         //
         lstAction.Add(new LoadingInitDataAction(ItemConsum,
-            delegate { this.LoadDbItemConsumable((string)dicFileDb[ItemConsum]); }));
-        
+            delegate { this.LoadDbItemConsumable((string) dicFileDb[ItemConsum]); }));
+
         lstAction.Add(new LoadingInitDataAction(ItemAvatar,
-            delegate { this.LoadDbItemAvatar((string)dicFileDb[ItemAvatar]); }));
-        
+            delegate { this.LoadDbItemAvatar((string) dicFileDb[ItemAvatar]); }));
+
         lstAction.Add(new LoadingInitDataAction(ItemBullet,
-            delegate { this.LoadDbItemBullet((string)dicFileDb[ItemBullet]); }));
-        
+            delegate { this.LoadDbItemBullet((string) dicFileDb[ItemBullet]); }));
+
         lstAction.Add(new LoadingInitDataAction(ItemDrop,
-            delegate { this.LoadDbItemDrop((string)dicFileDb[ItemDrop]); }));
-        
+            delegate { this.LoadDbItemDrop((string) dicFileDb[ItemDrop]); }));
+
         lstAction.Add(new LoadingInitDataAction(MapModel,
-            delegate { this.LoadDbMapModel((string)dicFileDb[MapModel]); }));
-        
+            delegate { this.LoadDbMapModel((string) dicFileDb[MapModel]); }));
+
         lstAction.Add(new LoadingInitDataAction(CharacterModel,
-            delegate { this.LoadDbCharacterModel((string)dicFileDb[CharacterModel]); }));
+            delegate { this.LoadDbCharacterModel((string) dicFileDb[CharacterModel]); }));
         //
         int numAction = lstAction.Count;
         if (numAction < 0)
@@ -289,10 +289,21 @@ public class DbManager
     {
         return (ItemConsumable) _lstItemConsumable.Find(c => c.ItemKey == itemKey).Clone();
     }
-    
+
     private void LoadDbItemConsumable(string json)
     {
-        
+        _lstItemConsumable = new List<ItemConsumable>();
+        JSONArray jArr = JSONArray.Parse(json).AsArray;
+        for (int i = 0; i < jArr.Count; i++)
+        {
+            JSONClass jObj = jArr[i].AsObject;
+            ItemConsumable itemConsum = new ItemConsumable();
+            itemConsum.ItemKey = jObj["id"].AsInt;
+            itemConsum.ItemName = jObj["name"].Value;
+            itemConsum.ItemDesc = jObj["desc"].Value;
+            itemConsum.Type = jObj["type"].AsInt;
+            _lstItemConsumable.Add(itemConsum);
+        }
     }
 
     #endregion
@@ -304,10 +315,22 @@ public class DbManager
     {
         return (ItemAvatar) _lstItemAvatar.Find(c => c.ItemKey == itemKey).Clone();
     }
-    
+
     private void LoadDbItemAvatar(string json)
     {
-        
+        _lstItemAvatar = new List<ItemAvatar>();
+        JSONArray jArr = JSONArray.Parse(json).AsArray;
+        for (int i = 0; i < jArr.Count; i++)
+        {
+            JSONClass jObj = jArr[i].AsObject;
+            ItemAvatar itemAvatar = new ItemAvatar();
+            itemAvatar.ItemKey = jObj["id"].AsInt;
+            itemAvatar.ItemName = jObj["name"].Value;
+            List<int> lstPrice = Utils.StringToList<int>(jObj["price"].Value);
+            itemAvatar.Price = this.GetItemConsumableCopy(lstPrice[0]);
+            if (itemAvatar.Price != null) itemAvatar.Price.ItemNumber = lstPrice[1];
+            _lstItemAvatar.Add(itemAvatar);
+        }
     }
 
     #endregion
@@ -319,16 +342,29 @@ public class DbManager
     {
         return (ItemBullet) _lstItemBullet.Find(c => c.ItemKey == itemKey).Clone();
     }
-    
+
     private void LoadDbItemBullet(string json)
     {
-        
+        _lstItemBullet = new List<ItemBullet>();
+        JSONArray jsonArr = JSONArray.Parse(json).AsArray;
+        for (int i = 0; i < jsonArr.Count; i++)
+        {
+            JSONClass jObj = jsonArr[i].AsObject;
+            ItemBullet itemBullet = new ItemBullet();
+            itemBullet.ItemKey = jObj["id"].AsInt;
+            itemBullet.ItemName = jObj["name"].Value;
+            itemBullet.Damage = jObj["damage"].AsInt;
+            List<int> lstPrice = Utils.StringToList<int>(jObj["price"].Value);
+            itemBullet.Price = this.GetItemConsumableCopy(lstPrice[0]);
+            if (itemBullet.Price != null) itemBullet.Price.ItemNumber = lstPrice[1];
+            _lstItemBullet.Add(itemBullet);
+        }
     }
 
     #endregion
 
     #region Item Drop
-    
+
     [CanBeNull]
     public ItemDrop GetItemDropCopy(int itemKey)
     {
@@ -337,20 +373,60 @@ public class DbManager
 
     private void LoadDbItemDrop(string json)
     {
-        
-    }    
+        _lstItemDrop = new List<ItemDrop>();
+        JSONArray jsonArr = JSONArray.Parse(json).AsArray;
+        for (int i = 0; i < jsonArr.Count; i++)
+        {
+            JSONClass jObj = jsonArr[i].AsObject;
+            ItemDrop itemDrop = new ItemDrop();
+            itemDrop.ItemKey = jObj["id"].AsInt;
+            itemDrop.ItemName = jObj["name"].Value;
+            itemDrop.Hp = jObj["hp"].AsInt;
+            itemDrop.Type = (ItemDropType) jObj["type"].AsInt;
+            itemDrop.Value = jObj["valueAdd"].AsInt;
+            itemDrop.Quality = (ItemQuality) jObj["quality"].AsInt;
+            itemDrop.Damage = jObj["damage"].AsInt;
+            _lstItemDrop.Add(itemDrop);
+        }
+    }
 
     #endregion
-    
+
     #region Map Model
-    
+
     private void LoadDbMapModel(string json)
     {
-        
-    }    
+        _dictMapModel = new Dictionary<int, List<MapModel>>();
+        JSONArray jsonArr = JSONArray.Parse(json).AsArray;
+        for (int i = 0; i < jsonArr.Count; i++)
+        {
+            JSONClass jObj = jsonArr[i].AsObject;
+            MapModel mapModel = new MapModel();
+            mapModel.ID = jObj["id"].AsInt;
+            mapModel.MapID = jObj["map"].AsInt;
+            mapModel.Level = jObj["level"].AsInt;
+            List<int> lstItemDropRate = Utils.StringToList<int>(jObj["item_drop"].Value);
+            for (int j = 0; j < lstItemDropRate.Count; j += 2)
+            {
+                if (mapModel.DictItemDropRate.ContainsKey(lstItemDropRate[j]))
+                    mapModel.DictItemDropRate[lstItemDropRate[j]] = lstItemDropRate[j + 1];
+                else
+                    mapModel.DictItemDropRate.Add(lstItemDropRate[j], lstItemDropRate[j + 1]);
+            }
+
+            mapModel.RequirePoint = jObj["require_point"].AsInt;
+            mapModel.WinCoin = jObj["win_coin"].AsInt;
+            mapModel.Time = jObj["time"].AsInt;
+            //
+            if (_dictMapModel.ContainsKey(mapModel.MapID))
+                _dictMapModel[mapModel.MapID].Add(mapModel);
+            else
+                _dictMapModel.Add(mapModel.MapID, new List<MapModel>(){mapModel});
+        }
+    }
 
     #endregion
-    
+
     #region Character Model
 
     [CanBeNull]
@@ -358,11 +434,26 @@ public class DbManager
     {
         return (CharacterModel) _lstCharacterModel.Find(c => c.ItemKey == itemKey).Clone();
     }
-    
+
     private void LoadDbCharacterModel(string json)
     {
-        
-    }    
+        _lstCharacterModel = new List<CharacterModel>();
+        JSONArray jsonArr = JSONArray.Parse(json).AsArray;
+        for (int i = 0; i < jsonArr.Count; i++)
+        {
+            JSONClass jObj = jsonArr[i].AsObject;
+            CharacterModel character = new CharacterModel();
+            character.ItemKey = jObj["id"].AsInt;
+            character.ItemName = jObj["name"].Value;
+            character.Hp = jObj["hp"].AsInt;
+            character.SpeedFire = jObj["speedFire"].AsInt;
+            character.ItemDesc = jObj["desc"].Value;
+            List<int> lstPrice = Utils.StringToList<int>(jObj["price"].Value);
+            character.Price = this.GetItemConsumableCopy(lstPrice[0]);
+            if (character.Price != null) character.Price.ItemNumber = lstPrice[1];
+            _lstCharacterModel.Add(character);
+        }
+    }
 
     #endregion
 }

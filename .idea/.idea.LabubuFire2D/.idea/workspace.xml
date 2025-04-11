@@ -72,10 +72,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3328">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="3328" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -101,6 +101,9 @@
       <workItem from="1743431723313" duration="3656000" />
       <workItem from="1743512486586" duration="8147000" />
       <workItem from="1743588052418" duration="2392000" />
+      <workItem from="1744193012303" duration="42000" />
+      <workItem from="1744365455722" duration="1689000" />
+      <workItem from="1744379956551" duration="1732000" />
     </task>
     <servers />
   </component>
@@ -113,6 +116,7 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#Firebase.Database.FirebaseDatabase" memberName="App" />
+        <PinnedItemInfo parentTag="Type#Firebase.Database.DataSnapshot+DataSnapshotList" memberName="database" />
       </pinned-members>
     </pin-to-top-manager>
   </component>

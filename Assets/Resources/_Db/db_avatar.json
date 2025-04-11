@@ -1,22 +1,22 @@
 [
- {
-   "Id": 1,
-   "name": "Mặc định",
-   "price": "0,0"
- },
- {
-   "Id": 2,
-   "name": "Avatar 1",
-   "price": "0,1000"
- },
- {
-   "Id": 3,
-   "name": "Avatar 2",
-   "price": "1,1000"
- },
- {
-   "Id": 4,
-   "name": "Avatar 3",
-   "price": "1,1000"
- }
+  {
+    "id": 1,
+    "name": "Mặc định",
+    "price": "[1,0]"
+  },
+  {
+    "id": 2,
+    "name": "Avatar 1",
+    "price": "[1,1000]"
+  },
+  {
+    "id": 3,
+    "name": "Avatar 2",
+    "price": "[2,1000]"
+  },
+  {
+    "id": 4,
+    "name": "Avatar 3",
+    "price": "[2,1000]"
+  }
 ]
