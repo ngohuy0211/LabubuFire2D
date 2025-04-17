@@ -83,10 +83,10 @@ public class ResourceHelper : MonoBehaviour
     public static void LoadSkeletonAnimation(SkeletonAnimation skeletonAnimation, string pathSkel)
     {
         UnityEngine.Object spineSkeleton = null;
-        
-        spineSkeleton = Resources.Load<UnityEngine.Object>(pathSkel);
+        string path = pathSkel + "_SkeletonData";
+        spineSkeleton = Resources.Load<UnityEngine.Object>(path);
 
-        if (spineSkeleton == null) Debug.LogError($"Error loading Skeleton Animation: {pathSkel}");
+        if (spineSkeleton == null) Debug.LogError($"Error loading Skeleton Animation: {path}");
 
         skeletonAnimation.skeletonDataAsset = (SkeletonDataAsset)spineSkeleton;
         skeletonAnimation.Initialize(true);
@@ -95,10 +95,10 @@ public class ResourceHelper : MonoBehaviour
     public static void LoadSkeletonGraphicUI(SkeletonGraphic skeletonGraphic, string pathSkel)
     {
         UnityEngine.Object spineSkeleton = null;
+        string path = pathSkel + "_SkeletonData";
 
-        spineSkeleton = Resources.Load<UnityEngine.Object>(pathSkel);
-
-        if (spineSkeleton == null) Debug.LogError($"Error loading Skeleton Graphic: {pathSkel}");
+        spineSkeleton = Resources.Load<UnityEngine.Object>(path);
+        if (spineSkeleton == null) Debug.LogError($"Error loading Skeleton Graphic: {path}");
 
         skeletonGraphic.skeletonDataAsset = (SkeletonDataAsset)spineSkeleton;
         skeletonGraphic.Initialize(true);

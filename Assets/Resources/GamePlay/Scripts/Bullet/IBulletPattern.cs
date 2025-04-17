@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IBulletPattern
 {
-    void Fire(Transform firePoint, BulletFactory factory);
+    void Fire(Transform firePoint);
 }

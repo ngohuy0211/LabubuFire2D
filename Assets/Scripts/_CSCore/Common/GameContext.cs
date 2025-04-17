@@ -12,6 +12,7 @@ public class GameContext : Singleton<GameContext>
     public List<UserModel> LstUsersModel = new List<UserModel>();
     public BaseScene CurrentScene = null;
     public List<BasePopup> PopupActives = new List<BasePopup>();
+    public MapModel CurrMapSelect = null;
     public bool MusicOn = true;
     public bool SoundOn = true;
     public string CurrentVersionApp = "";
@@ -29,5 +30,6 @@ public class GameContext : Singleton<GameContext>
         UserModel = new UserModel();
         StaticData.Reset();
         PlayerInventory.Instance.ClearInventory();
+        CurrMapSelect = null;
     }
 }
