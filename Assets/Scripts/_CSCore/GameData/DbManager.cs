@@ -282,6 +282,20 @@ public class DbManager
 
     #endregion
 
+    #region TEST
+
+    public void LoadAllDb()
+    {
+        LoadDbItemConsumable(ResourceHelper.LoadDbTextContent("db_item_consumable"));
+        LoadDbItemBullet(ResourceHelper.LoadDbTextContent("db_bullet"));
+        LoadDbItemDrop(ResourceHelper.LoadDbTextContent("db_item_drop"));
+        LoadDbMapModel(ResourceHelper.LoadDbTextContent("db_map"));
+        LoadDbCharacterModel(ResourceHelper.LoadDbTextContent("db_character"));
+        LoadDbItemAvatar(ResourceHelper.LoadDbTextContent("db_avatar"));
+    }
+
+    #endregion
+    
     #region Item Consumable
 
     [CanBeNull]
@@ -392,6 +406,7 @@ public class DbManager
             itemDrop.ItemKey = jObj["id"].AsInt;
             itemDrop.ItemName = jObj["name"].Value;
             itemDrop.Hp = jObj["hp"].AsInt;
+            itemDrop.Speed = jObj["speed"].AsFloat;
             itemDrop.Type = (ItemDropType) jObj["type"].AsInt;
             itemDrop.Value = jObj["valueAdd"].AsInt;
             itemDrop.Quality = (ItemQuality) jObj["quality"].AsInt;
@@ -403,6 +418,11 @@ public class DbManager
     #endregion
 
     #region Map Model
+
+    public MapModel GetMapModel(int mapId, int id)
+    {
+        return _dictMapModel[mapId].Find(c=>c.ID == id);
+    }
 
     private void LoadDbMapModel(string json)
     {
@@ -427,6 +447,7 @@ public class DbManager
             mapModel.RequirePoint = jObj["require_point"].AsInt;
             mapModel.WinCoin = jObj["win_coin"].AsInt;
             mapModel.Time = jObj["time"].AsInt;
+            mapModel.SpawnInterval = jObj["spawn_interval"].AsFloat;
             //
             if (_dictMapModel.ContainsKey(mapModel.MapID))
                 _dictMapModel[mapModel.MapID].Add(mapModel);

@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     #region Define
 
-    [SerializeField] private SkeletonAnimation skelPlayer;
+    [SerializeField] private SpineAnimationObject skelPlayer;
     [SerializeField] private Transform tfSpawnBullet;
     
     #endregion
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
         if (currChar == null) return;
         
         string pathPlayerSkel = "_Common/Characters/" + currChar.ItemKey + "/" + currChar.ItemKey;
-        ResourceHelper.LoadSkeletonAnimation(skelPlayer, pathPlayerSkel);
+        skelPlayer.LoadSpine(pathPlayerSkel);
     }
     
     #endregion

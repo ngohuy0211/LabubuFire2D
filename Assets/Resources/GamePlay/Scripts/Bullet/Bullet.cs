@@ -1,20 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
 
-public abstract class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
-    protected float speed;
-    protected Vector2 direction;
-    
-    public void Initialize(float speed, Vector2 direction)
-    {
-        this.speed = speed;
-        this.direction = direction.normalized;
-    }
+    [SerializeField] private SpineAnimationObject skelBullet;
 
-    void Update()
+    public void SetData(ItemBullet bullet)
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        // string pathBullet = "_Common/ItemBullet/" + bullet.ItemKey + "/" + bullet.ItemKey;
+        // skelBullet.LoadSpine(pathBullet);
     }
 }

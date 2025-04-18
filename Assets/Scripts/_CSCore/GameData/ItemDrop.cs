@@ -6,6 +6,7 @@ using UnityEngine;
 public class ItemDrop : ItemModel
 {
     public int Hp { get; set; }
+    public float Speed { get; set; }
     public int Value { get; set; }
     public ItemQuality Quality { get; set; }
     public int Damage { get; set; }

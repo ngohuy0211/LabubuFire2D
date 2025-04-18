@@ -9,7 +9,7 @@ using UnityEngine.U2D;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
-using AOCSCore.SafeAreaUI;
+using ChiuChiuCSCore.SafeAreaUI;
 using Object = System.Object;
 
 public class SharedUtils

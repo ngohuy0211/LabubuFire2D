@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using AOCSCore;
+using ChiuChiuCSCore;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;

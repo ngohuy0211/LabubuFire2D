@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AOCSCore.SafeAreaUI
+namespace ChiuChiuCSCore.SafeAreaUI
 {
     public class SafeAreaAdapterV2 : MonoBehaviour
     {

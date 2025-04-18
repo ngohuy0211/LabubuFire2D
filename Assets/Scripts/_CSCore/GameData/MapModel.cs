@@ -11,4 +11,5 @@ public class MapModel
     public int RequirePoint { get; set; }
     public int WinCoin { get; set; }
     public int Time { get; set; }
+    public float SpawnInterval { get; set; }
 }

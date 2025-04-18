@@ -1,4 +1,4 @@
-namespace AOCSCore
+namespace ChiuChiuCSCore
 {
     public interface IObjectPoolable
     {
